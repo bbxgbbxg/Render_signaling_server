@@ -20,3 +20,8 @@ app.use('/', peerServer);
 app.get('/health', (req, res) => {
     res.send('Server is running');
 });
+
+// Add root route
+app.get('/', (req, res) => {
+    res.send('Signaling server is running');
+});
