@@ -9,12 +9,13 @@ const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
 
+// Configure PeerServer
 const peerServer = ExpressPeerServer(server, {
-    path: '/myapp',
-    debug: true
+    debug: true,
+    path: '/'  // This is important
 });
 
-// Add root route
+// Root route
 app.get('/', (req, res) => {
     res.send('Signaling server is running');
 });
@@ -24,4 +25,10 @@ app.get('/health', (req, res) => {
     res.send('Server is running');
 });
 
-app.use('/', peerServer);
+// Mount PeerJS server
+app.use('/peerjs', peerServer);
+
+// Optional: Add a route to check PeerJS status
+app.get('/peerjs/status', (req, res) => {
+    res.send('PeerJS server is running');
+});
